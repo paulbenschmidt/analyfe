@@ -7,6 +7,40 @@ class AddEntryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0),
+        child: AppBar(
+          backgroundColor: Theme.of(context).backgroundColor,
+          elevation: 0,
+          centerTitle: true,
+          bottom: PreferredSize(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: Icon(Icons.chevron_left),
+                  ),
+                  decoration: SoftUi.boxDecoration(context),
+                ),
+                Text(
+                  'Entry',
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                Container(
+                  child: FlatButton(
+                    onPressed: () {},
+                    child: Icon(Icons.save_alt),
+                  ),
+                  decoration: SoftUi.boxDecoration(context),
+                ),
+              ],
+            ),
+            preferredSize: null,
+          ),
+        ),
+      ),
       body: ListView(
         children: [
           SizedBox(
@@ -39,7 +73,7 @@ class AddEntryScreen extends StatelessWidget {
                         Container(
                           child: Text(
                             '8',
-                            style: TextStyle(fontSize: 40),
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
                         IconButton(

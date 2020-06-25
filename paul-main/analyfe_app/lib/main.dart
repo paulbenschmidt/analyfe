@@ -13,14 +13,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         accentColor: Colors.amber,
-        backgroundColor: Colors.teal[100],
-        highlightColor: Colors.teal[300],
-        dividerColor: Colors.teal[50],
-        fontFamily: 'Moderne-Sans-Font',
+        backgroundColor: Colors.grey[200],
+        highlightColor: Colors.grey[400],
+        dividerColor: Colors.white,
         textTheme: ThemeData.light().textTheme.copyWith(
+              headline1: TextStyle(
+                color: Colors.blueGrey[700],
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: 25,
+              ),
               bodyText1: TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-                fontSize: 30,
+                fontFamily: 'Montserrat',
+                color: Colors.blueGrey[700],
+                fontSize: 25,
               ),
             ),
       ),
