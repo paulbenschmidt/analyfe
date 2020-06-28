@@ -24,13 +24,142 @@ class _CalendarScreenState extends State<CalendarScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
+                padding: EdgeInsets.all(10),
                 width: 250,
                 height: 540,
                 decoration: SoftUi.boxDecoration(context),
-                child: Center(
-                  child: Text(
-                    'Calendar',
-                    style: Theme.of(context).textTheme.bodyText1,
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '12 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '1 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '2 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '3 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '4 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '5 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '6 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '7 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '8 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '9 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '10 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '11 AM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '12 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '1 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '2 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '3 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '4 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '5 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '6 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '7 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '8 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '9 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '10 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '11 PM',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                      Column(
+                        children: [],
+                      )
+                    ],
                   ),
                 ),
               ),
