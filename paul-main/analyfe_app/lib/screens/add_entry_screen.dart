@@ -17,7 +17,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
-        child: entryAppBar(context),
+        child: _entryAppBar(context),
       ),
       body: ListView(
         children: [
@@ -125,7 +125,7 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
   }
 }
 
-AppBar entryAppBar(context) {
+AppBar _entryAppBar(context) {
   return AppBar(
     backgroundColor: Theme.of(context).backgroundColor,
     elevation:0,

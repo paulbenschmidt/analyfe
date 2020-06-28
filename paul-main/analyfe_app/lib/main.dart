@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './screens/add_entry_screen.dart';
+import './screens/alternate.dart';
 import './style/theme_data.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: defaultTheme,
-      home: AddEntryScreen(),
+      home: CalendarScreen(),
     );
   }
 }
