@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './screens/add_entry_screen.dart';
-import './screens/alternate.dart';
+import './screens/calendar_screen.dart';
 import './style/theme_data.dart';
 
 void main() {
