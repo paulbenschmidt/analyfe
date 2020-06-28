@@ -77,7 +77,7 @@ AppBar _entryAppBar(context) {
           Container(
             child: FlatButton(
               onPressed: () {},
-              child: Icon(Icons.history),
+              child: Icon(Icons.settings),
             ),
             decoration: SoftUi.boxDecoration(context),
             width: 60,

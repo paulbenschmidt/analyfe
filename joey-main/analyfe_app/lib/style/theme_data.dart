@@ -7,8 +7,8 @@ ThemeData _buildDefaultTheme() {
     primarySwatch: Colors.pink,
     accentColor: Colors.amber,
     backgroundColor: Colors.grey[300],
-    highlightColor: Colors.grey[500],
-    dividerColor: Colors.white,
+    dividerColor: Colors.grey[500],
+    highlightColor: Colors.white,
     textTheme: ThemeData.light().textTheme.copyWith(
           headline1: TextStyle(
             color: Colors.blueGrey[700],
