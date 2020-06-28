@@ -40,7 +40,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 decoration: SoftUi.boxDecoration(context),
                 child: Center(
                   child: Text(
-                    'Activities',
+                    'Monkey Diaper Rash',
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),

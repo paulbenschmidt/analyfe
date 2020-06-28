@@ -19,6 +19,7 @@ class _AuthFormState extends State<AuthForm> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Email Address'),
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Password'),
