@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/calendar_screen.dart';
+
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -28,7 +30,11 @@ class _AuthFormState extends State<AuthForm> {
                 //Section for Buttons
                 RaisedButton(
                   child: Text(_isLogin ? 'Login' : 'Signup'),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_isLogin) {
+                      Navigator.of(context).pushNamed(CalendarScreen.routeName);
+                    }
+                  },
                 ),
                 FlatButton(
                   child: Text(_isLogin ? 'Create New Account' : 'Login'),

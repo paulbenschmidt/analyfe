@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import './settings_screen.dart';
 import '../style/soft_ui.dart';
 
 class CalendarScreen extends StatefulWidget {
+  static const routeName = '/calendar';
+
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
 }
@@ -76,7 +79,9 @@ AppBar _entryAppBar(context) {
           ),
           Container(
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(SettingsScreen.routeName);
+              },
               child: Icon(Icons.settings),
             ),
             decoration: SoftUi.boxDecoration(context),

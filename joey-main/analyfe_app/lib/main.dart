@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './screens/auth_screen.dart';
 import './screens/calendar_screen.dart';
+import './screens/settings_screen.dart';
 import './style/theme_data.dart';
 
 void main() {
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: defaultTheme,
-      home: CalendarScreen(),
+      home: AuthScreen(),
+      routes: {
+        CalendarScreen.routeName: (ctx) => CalendarScreen(),
+        SettingsScreen.routeName: (ctx) => SettingsScreen(),
+      },
     );
   }
 }
