@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "800490282088",
+    "firebase_url": "https://analyfe-server.firebaseio.com",
+    "project_id": "analyfe-server",
+    "storage_bucket": "analyfe-server.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800490282088:android:ff63555cd7d038f424efdd",
+        "android_client_info": {
+          "package_name": "com.example.analyfe_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800490282088-57mhnu91aavkp36lnci2p5mrci0h188u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtcajSZnoEz-6go_QcMnIpjVL2fCGpuK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800490282088-57mhnu91aavkp36lnci2p5mrci0h188u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
