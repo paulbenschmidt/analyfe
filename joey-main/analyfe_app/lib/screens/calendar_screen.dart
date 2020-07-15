@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import './test_activity_screen.dart';
 import './settings_screen.dart';
 import '../style/soft_ui.dart';
 
@@ -67,7 +68,9 @@ AppBar _entryAppBar(context) {
         children: [
           Container(
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(TestActivityScreen.routeName);
+              },
               child: Icon(Icons.chevron_left),
             ),
             decoration: SoftUi.boxDecoration(context),

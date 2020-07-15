@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
+
 import '../widgets/auth_form.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -11,9 +11,10 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _auth = FirebaseAuth.instance;
-  var _isLoading = false;
+  final _auth = FirebaseAuth.instance; //store login attempt
+  var _isLoading = false; //passed to AuthForm to load intermediate login screen
 
+  //user information widget that is sent to Authform
   void _submitAuthForm(
     String email,
     String password,
@@ -27,16 +28,19 @@ class _AuthScreenState extends State<AuthScreen> {
         _isLoading = true;
       });
       if (isLogin) {
+        //sign in attempt
         authResult = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
       } else {
+        //create new user attempt
         authResult = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
+        //add new user email to Firebase database
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
@@ -45,12 +49,15 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on PlatformException catch (err) {
-      var message = 'An error occured, please check your credentials!';
+      var message = 'An error occured, please check your credentials.';
 
       if (err.message != null) {
-        message = err.message;
+        message =
+            err.message; //display error login message if there is a message
       }
 
+      //RIGHT FORMAT FOR THEME?
+      //Load error message on a new popup
       Scaffold.of(ctx).showSnackBar(
         SnackBar(
           content: Text(message),
@@ -68,6 +75,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
   }
 
+  //Load Authform widget on screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
