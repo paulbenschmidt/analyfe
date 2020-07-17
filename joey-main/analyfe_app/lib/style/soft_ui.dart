@@ -7,18 +7,26 @@ class SoftUi {
       borderRadius: BorderRadius.all(Radius.circular(20)),
       boxShadow: [
         BoxShadow(
-          color: Theme.of(context).highlightColor,
+          color: Theme.of(context).dividerColor,
           offset: Offset(3.5, 3.5),
           blurRadius: 15.0,
           spreadRadius: 1.0,
         ),
         BoxShadow(
-          color: Theme.of(context).dividerColor,
+          color: Theme.of(context).highlightColor,
           offset: Offset(-3.5, -3.5),
           blurRadius: 15.0,
           spreadRadius: 1.0,
         ),
       ],
+    );
+  }
+
+  static BoxDecoration boxEntryOutline(context, borderColor) {
+    return BoxDecoration(
+      color: Theme.of(context).backgroundColor,
+      border: Border.all(color: borderColor, width: 3.5),
+      borderRadius: BorderRadius.all(Radius.circular(20)),
     );
   }
 }

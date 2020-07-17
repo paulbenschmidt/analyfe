@@ -1,12 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-class Events {
-  final Event event;
-
-  Events(this.event);
-}
 
 class Event {
   final DateTime id;
@@ -15,39 +8,50 @@ class Event {
   final DateTime endTime;
   final double sliderValue;
   final int counterValue;
+  final bool binaryValue;
 
-  Event(
-      {this.id,
-      this.activity,
-      this.startTime,
-      this.endTime,
-      this.sliderValue,
-      this.counterValue});
+  Event({
+    this.id,
+    this.activity,
+    this.startTime,
+    this.endTime,
+    this.sliderValue,
+    this.counterValue,
+    this.binaryValue,
+  });
 
   //must be a static method to access Event class without instantiating the class
-  static void sendToFirebase() async {
+  static void sendToFirebase({
+    String activity,
+    DateTime startTime,
+    DateTime endTime,
+    double sliderValue,
+    double countValue,
+    bool binaryValue,
+  }) async {
     //get user information
     final firebaseUser = await FirebaseAuth.instance.currentUser();
     final userID = firebaseUser.uid;
     //print(userID);
-    const activity = 'Sleep';
     Firestore.instance
         .collection('/Activities/$userID/$activity')
-        .document(DateTime.now().toString())
+        .document(endTime.toString())
         .setData({
-      'startTime': DateTime.now(),
-      'endTime': DateTime.now().add(new Duration(hours: 2)),
-      'sliderVal': 4.3
+      'startTime': startTime,
+      'endTime': endTime,
+      'sliderVal': sliderValue,
+      'countVal': countValue,
+      'binaryVal': binaryValue,
     });
   }
 
-  //
+  //convert Firebase entries to a list
   static Future<List<Event>> returnList() async {
     //get current user ID
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     final userID = firebaseUser.uid;
     //activity name
-    String name = 'Exercise';
+    String name = 'Sleep';
     QuerySnapshot snapshot = await Firestore.instance
         .collection('/Activities/$userID/$name')
         .getDocuments();
@@ -62,6 +66,7 @@ class Event {
             endTime: DateTime.parse(doc.data['endTime'].toDate().toString()),
             sliderValue: doc.data['sliderVal'],
             counterValue: doc.data['countVal'],
+            binaryValue: doc.data['binaryVal'],
           ),
         )
         .toList();

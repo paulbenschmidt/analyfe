@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,11 +16,18 @@ class SettingsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Settings and Stuff'),
-            Text('boop'),
+            TextField(),
             FlatButton(
-                child: Text('Press here'),
-                onPressed: () async {
-                  Event.sendToFirebase();
+                child: Text('Press here to upload to Firebase'),
+                onPressed: () {
+                  Event.sendToFirebase(
+                    activity: 'Sleep',
+                    startTime: DateTime.now(),
+                    endTime: DateTime.now().add(new Duration(hours: 2)),
+                    sliderValue: null,
+                    countValue: null,
+                    binaryValue: true,
+                  );
                 }),
             SizedBox(height: 12),
             FlatButton(

@@ -33,7 +33,7 @@ class _TestActivityScreenState extends State<TestActivityScreen> {
     setState(() {
       list = newlist;
     });
-    print(list[0].id);
+    //print(list[0].id);
   }
 
   Widget _buildList(BuildContext context, int index) {
@@ -52,6 +52,8 @@ class _TestActivityScreenState extends State<TestActivityScreen> {
             Text('slider value: ${list[index].sliderValue.toString()}'),
           if (list[index].counterValue != null)
             Text('slider value: ${list[index].counterValue.toString()}'),
+          if (list[index].binaryValue != null)
+            Text('slider value: ${list[index].binaryValue.toString()}'),
         ],
       ),
     );

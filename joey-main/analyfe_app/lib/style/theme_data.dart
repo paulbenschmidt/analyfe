@@ -21,6 +21,12 @@ ThemeData _buildDefaultTheme() {
             color: Colors.blueGrey[700],
             fontSize: 18,
           ),
+          subtitle1: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            color: Colors.blueGrey[700],
+            fontSize: 12,
+          ),
         ),
   );
 }
