@@ -15,7 +15,7 @@ class Init {
 
   static _registerRepositories() {
     GetIt.I.registerLazySingleton<ActivityRepository>(
-        () => SembastActivityRepository());
+        () => SembastActivityRepository(activityName: 'Sleep'));
   }
 
   static Future _initSembast() async {

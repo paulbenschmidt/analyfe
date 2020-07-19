@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
   _addActivity() async {
     //final list = ['sleep', 'meditation', 'eating']..shuffle();
-    final name = 'Sleep';
+    final name = 'Exercise';
     final startTime = Timestamp.now();
     final endTime =
         Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 3)));
