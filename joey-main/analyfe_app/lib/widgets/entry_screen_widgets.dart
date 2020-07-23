@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/test_activity_screen.dart';
+import '../screens/analytics_screen.dart';
 import '../screens/settings_screen.dart';
 import '../models/activities.dart';
 import '../style/soft_ui.dart';
@@ -18,7 +18,7 @@ AppBar entryAppBar(context) {
           Container(
             child: FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(TestActivityScreen.routeName);
+                Navigator.of(context).pushNamed(AnalyticsScreen.routeName);
               },
               child: Icon(Icons.chevron_left),
             ),

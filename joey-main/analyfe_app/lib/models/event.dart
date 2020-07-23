@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
   final DateTime id;
-  final String activity;
+  final String activityName;
   final DateTime startTime;
   final DateTime endTime;
   final double sliderValue;
@@ -12,7 +12,7 @@ class Event {
 
   Event({
     this.id,
-    this.activity,
+    this.activityName,
     this.startTime,
     this.endTime,
     this.sliderValue,
@@ -51,16 +51,16 @@ class Event {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     final userID = firebaseUser.uid;
     //activity name
-    String name = 'Sleep';
+    String activity = 'Sleep'; //needs to access all activities
     QuerySnapshot snapshot = await Firestore.instance
-        .collection('/Activities/$userID/$name')
+        .collection('/Activities/$userID/$activity')
         .getDocuments();
 
     return snapshot.documents
         .map(
           (doc) => Event(
             id: DateTime.parse(doc.data['startTime'].toDate().toString()),
-            activity: name,
+            activityName: activity,
             startTime:
                 DateTime.parse(doc.data['startTime'].toDate().toString()),
             endTime: DateTime.parse(doc.data['endTime'].toDate().toString()),

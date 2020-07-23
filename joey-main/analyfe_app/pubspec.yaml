@@ -24,11 +24,20 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Add local NoSQL database
+  sembast: ^2.4.3
+  get_it: ^4.0.2
+  path_provider: ^1.6.7
+  # Add local NoSQL database
+
   #Add firebase communication
   cloud_firestore: ^0.13.7
   firebase_auth: ^0.16.1
   #Add firebase communication
 
+  #Analytics charts
+  fl_chart: ^0.10.1
+  #Analytics charts
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

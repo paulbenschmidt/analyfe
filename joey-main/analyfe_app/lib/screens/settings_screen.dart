@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../screens/test_screen.dart';
 import '../models/event.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -29,6 +29,14 @@ class SettingsScreen extends StatelessWidget {
                     binaryValue: true,
                   );
                 }),
+            SizedBox(height: 12),
+            FlatButton(
+              child: Text('Test Screen'),
+              onPressed: () {
+                //Pop back to login screen and log user out
+                Navigator.of(context).pushNamed(TestScreen.routeName);
+              },
+            ),
             SizedBox(height: 12),
             FlatButton(
               child: Text('Logout'),

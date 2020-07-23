@@ -8,21 +8,37 @@ import 'package:sembast_test/activity_repository.dart';
 import './sembast_activity_repository.dart';
 
 class Init {
+  //final String activityName;
+  //Init(this.activityName);
+
   static Future initialize() async {
-    await _initSembast();
-    _registerRepositories();
-  }
-
-  static _registerRepositories() {
-    GetIt.I.registerLazySingleton<ActivityRepository>(
-        () => SembastActivityRepository(activityName: 'Sleep'));
-  }
-
-  static Future _initSembast() async {
+    //initialize Sembast database
     final appDir = await getApplicationDocumentsDirectory();
     await appDir.create(recursive: true);
     final databasePath = join(appDir.path, "sembast.db");
     final database = await databaseFactoryIo.openDatabase(databasePath);
     GetIt.I.registerSingleton<Database>(database);
+
+    //register Repository
+    GetIt.I.registerLazySingleton<ActivityRepository>(
+        () => SembastActivityRepository(activityName: 'Sleep'));
   }
+
+  // static Future initialize() async {
+  //   await _initSembast();
+  //   _registerRepositories();
+  // }
+
+  // static _registerRepositories() {
+  //   GetIt.I.registerLazySingleton<ActivityRepository>(
+  //       () => SembastActivityRepository(activityName: 'Sleep'));
+  // }
+
+  // static Future _initSembast() async {
+  //   final appDir = await getApplicationDocumentsDirectory();
+  //   await appDir.create(recursive: true);
+  //   final databasePath = join(appDir.path, "sembast.db");
+  //   final database = await databaseFactoryIo.openDatabase(databasePath);
+  //   GetIt.I.registerSingleton<Database>(database);
+  // }
 }

@@ -5,13 +5,12 @@ import './activity.dart';
 import './activity_repository.dart';
 
 class SembastActivityRepository extends ActivityRepository {
-  final String activityName;
+  final String activityName; //available paths are log, user_preferences,
   final StoreRef<int, Map<String, dynamic>> _store;
+  final Database _database = GetIt.I.get();
 
   SembastActivityRepository({this.activityName})
       : _store = intMapStoreFactory.store(activityName);
-
-  final Database _database = GetIt.I.get();
 
   @override
   Future<int> insertActivity(Activity activity) async {

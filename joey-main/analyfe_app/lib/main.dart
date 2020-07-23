@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; //login
 
+import './screens/test_screen.dart';
 import './screens/entry_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/settings_screen.dart';
-import './screens/test_activity_screen.dart';
+import './screens/analytics_screen.dart';
 import './style/theme_data.dart';
 
 void main() {
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
       routes: {
         EntryScreen.routeName: (ctx) => EntryScreen(),
         SettingsScreen.routeName: (ctx) => SettingsScreen(),
-        TestActivityScreen.routeName: (ctx) => TestActivityScreen(),
+        AnalyticsScreen.routeName: (ctx) => AnalyticsScreen(),
+        TestScreen.routeName: (ctx) => TestScreen(),
       },
     );
   }
