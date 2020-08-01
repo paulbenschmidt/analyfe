@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../screens/DB_screen.dart';
 import '../screens/test_screen.dart';
-import '../models/event.dart';
+import '../models/activity.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
@@ -20,10 +21,12 @@ class SettingsScreen extends StatelessWidget {
             FlatButton(
                 child: Text('Press here to upload to Firebase'),
                 onPressed: () {
-                  Event.sendToFirebase(
-                    activity: 'Sleep',
-                    startTime: DateTime.now(),
-                    endTime: DateTime.now().add(new Duration(hours: 2)),
+                  final startTime = DateTime.now();
+                  Activity.sendToFirebase(
+                    id: 1,
+                    activity: 'Exercise',
+                    startTime: startTime, //DateTime.now(),
+                    endTime: startTime.add(new Duration(hours: 2)),
                     sliderValue: null,
                     countValue: null,
                     binaryValue: true,
@@ -31,10 +34,17 @@ class SettingsScreen extends StatelessWidget {
                 }),
             SizedBox(height: 12),
             FlatButton(
-              child: Text('Test Screen'),
+              child: Text('Firebase Test Screen'),
               onPressed: () {
                 //Pop back to login screen and log user out
                 Navigator.of(context).pushNamed(TestScreen.routeName);
+              },
+            ),
+            FlatButton(
+              child: Text('Local Database Test Screen'),
+              onPressed: () {
+                //Pop back to login screen and log user out
+                Navigator.of(context).pushNamed(DatabaseScreen.routeName);
               },
             ),
             SizedBox(height: 12),

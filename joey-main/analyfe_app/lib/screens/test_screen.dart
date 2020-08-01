@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sembast/timestamp.dart';
 
 import '../models/outcome.dart';
-import '../models/event.dart';
+import '../models/activity.dart';
 
 class TestScreen extends StatefulWidget {
   static const routeName = '/test';
@@ -38,7 +38,7 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   void _onPressed() async {
-    List<Event> newActivityList = await Event.returnList();
+    List<Activity> newActivityList = await Activity.returnList();
     setState(() {
       activityList = newActivityList;
     });
@@ -48,7 +48,7 @@ class _TestScreenState extends State<TestScreen> {
     return Card(
       child: Column(
         children: <Widget>[
-          Text(activityList[index].activityName.toString()),
+          Text(activityList[index].name.toString()),
           SizedBox(height: 40),
           Text('id: ${activityList[index].id.toString()}'),
           SizedBox(height: 20),
@@ -56,71 +56,77 @@ class _TestScreenState extends State<TestScreen> {
           SizedBox(height: 20),
           Text('end time: ${activityList[index].endTime.toString()}'),
           SizedBox(height: 20),
-          if (activityList[index].sliderValue != null)
-            Text('slider value: ${activityList[index].sliderValue.toString()}'),
-          if (activityList[index].counterValue != null)
-            Text(
-                'slider value: ${activityList[index].counterValue.toString()}'),
-          if (activityList[index].binaryValue != null)
-            Text('slider value: ${activityList[index].binaryValue.toString()}'),
+          if (activityList[index].sliderVal != null)
+            Text('slider value: ${activityList[index].sliderVal.toString()}'),
+          if (activityList[index].countVal != null)
+            Text('slider value: ${activityList[index].countVal.toString()}'),
+          if (activityList[index].binaryVal != null)
+            Text('slider value: ${activityList[index].binaryVal.toString()}'),
         ],
       ),
     );
   }
 
-  List<Event> activityList = [
-    Event(
-      activityName: 'Exercise',
-      id: DateTime.now().add(new Duration(hours: 3)),
-      startTime: DateTime.now(),
-      endTime: DateTime.now().add(new Duration(hours: 3)),
+  List<Activity> activityList = [
+    Activity(
+      name: 'Exercise',
+      id: 1,
+      startTime: Timestamp.fromDateTime(DateTime.now()),
+      endTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 3))),
     ),
-    Event(
-      activityName: 'Exercise',
-      id: DateTime.now().add(new Duration(hours: 6)),
-      startTime: DateTime.now().add(new Duration(hours: 5)),
-      endTime: DateTime.now().add(new Duration(hours: 6)),
+    Activity(
+      name: 'Exercise',
+      id: 2,
+      startTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 3))),
+      endTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 4))),
     ),
-    Event(
-      activityName: 'Exercise',
-      id: DateTime.now().add(new Duration(hours: 9)),
-      startTime: DateTime.now().add(new Duration(hours: 8)),
-      endTime: DateTime.now().add(new Duration(hours: 9)),
+    Activity(
+      name: 'Exercise',
+      id: 3,
+      startTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 6))),
+      endTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 7))),
     ),
-    Event(
-      activityName: 'Exercise',
-      id: DateTime.now().add(new Duration(hours: 6)),
-      startTime: DateTime.now().add(new Duration(hours: 5)),
-      endTime: DateTime.now().add(new Duration(hours: 6)),
+    Activity(
+      name: 'Exercise',
+      id: 4,
+      startTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 8))),
+      endTime:
+          Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 9))),
     ),
   ];
 
   List<Outcome> outcomeList = [
-    Outcome(name: 'mood', recordedTime: Timestamp.now(), value: 5.6),
+    Outcome(name: 'mood', recordedTime: Timestamp.now(), sliderVal: 5.6),
     Outcome(
         name: 'mood',
         recordedTime:
             Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 1))),
-        value: 6.7),
+        sliderVal: 6.7),
     Outcome(
         name: 'mood',
         recordedTime:
             Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 2))),
-        value: 5.5),
+        sliderVal: 5.5),
     Outcome(
         name: 'mood',
         recordedTime:
             Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 3))),
-        value: 6.2),
+        sliderVal: 6.2),
     Outcome(
         name: 'mood',
         recordedTime:
             Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 4))),
-        value: 7.7),
+        sliderVal: 7.7),
     Outcome(
         name: 'mood',
         recordedTime: Timestamp.fromDateTime(
             DateTime.now().add(new Duration(hours: 5, minutes: 26))),
-        value: 6.4),
+        sliderVal: 6.4),
   ];
 }

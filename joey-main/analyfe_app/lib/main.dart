@@ -6,6 +6,7 @@ import './screens/entry_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/settings_screen.dart';
 import './screens/analytics_screen.dart';
+import './screens/DB_screen.dart';
 import './style/theme_data.dart';
 
 void main() {
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         SettingsScreen.routeName: (ctx) => SettingsScreen(),
         AnalyticsScreen.routeName: (ctx) => AnalyticsScreen(),
         TestScreen.routeName: (ctx) => TestScreen(),
+        DatabaseScreen.routeName: (ctx) => DatabaseScreen(),
       },
     );
   }

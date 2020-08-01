@@ -3,29 +3,23 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sembast/timestamp.dart';
-import 'package:sembast/sembast.dart';
 
-import 'models/activity.dart';
-import 'models/outcome.dart';
-import 'local_repository.dart';
+import '../models/userPref.dart';
+import '../models/activity.dart';
+import '../models/outcome.dart';
+import '../database/local_repository.dart';
 
-class HomePage extends StatefulWidget {
+class DatabaseHelpScreen extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _DatabaseHelpScreenState createState() => _DatabaseHelpScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DatabaseHelpScreenState extends State<DatabaseHelpScreen> {
   LocalRepository _localRepository = GetIt.I.get();
-  //
-  static String activityListName = 'activityList';
-  StoreRef<int, Map<String, dynamic>> _activityList =
-      intMapStoreFactory.store(activityListName);
-  static String outcomeListName = 'outcomeList';
-  StoreRef<int, Map<String, dynamic>> _outcomeList =
-      intMapStoreFactory.store(outcomeListName);
 
   List<Activity> _activities = [];
   List<Outcome> _outcomes = [];
+  List<UserPreferences> _userPref = [];
 
   @override
   void initState() {
@@ -84,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               FlatButton(
                 color: Colors.red[100],
                 child: Text('Delete Activity List'),
-                onPressed: _deleteAllActivities,
+                onPressed: _clearAllActivities,
               ),
             ],
           ),
@@ -98,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               FlatButton(
                 color: Colors.red[100],
                 child: Text('Delete Outcome List'),
-                onPressed: _deleteAllOutcomes,
+                onPressed: _clearAllOutcomes,
               ),
             ],
           ),
@@ -146,13 +140,18 @@ class _HomePageState extends State<HomePage> {
     setState(() => _outcomes = outcomes);
   }
 
+  _loadUserPref() async {
+    final userPref = await _localRepository.getAllUserPref();
+    setState(() => _userPref = userPref);
+  }
+
   //
   //
   //
 
   _addActivity() async {
-    //final list = ['sleep', 'meditation', 'eating']..shuffle();
-    final name = 'Activity';
+    final list = ['Sleep', 'Meditation', 'Eating']..shuffle();
+    final name = list[0];
     final startTime = Timestamp.now();
     final endTime =
         Timestamp.fromDateTime(DateTime.now().add(new Duration(hours: 3)));
@@ -172,8 +171,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _addOutcome() async {
-    //final list = ['sleep', 'meditation', 'eating']..shuffle();
-    final name = 'Outcome';
+    final list = ['Mood', 'Energy', 'Productivity']..shuffle();
+    final name = list[0];
     final recordedTime = Timestamp.now();
     final sliderVal = Random().nextDouble() * 10;
     final newOutcome = Outcome(
@@ -183,6 +182,20 @@ class _HomePageState extends State<HomePage> {
     );
     await _localRepository.insertOutcome(newOutcome);
     _loadOutcomes();
+  }
+
+  _addUserPref() async {
+    final list = ['Cat', 'Default', 'Coder']..shuffle();
+    final theme = list[0];
+    final outcomeList = ['Mood', 'Energy', 'Productivity'];
+    final activityList = ['Sleep', 'Meditation', 'Eating'];
+    final newUserPref = UserPreferences(
+      activityList: activityList,
+      outcomeList: outcomeList,
+      theme: theme,
+    );
+    await _localRepository.insertUserPref(newUserPref);
+    _loadUserPref();
   }
 
   //
@@ -215,17 +228,30 @@ class _HomePageState extends State<HomePage> {
     _loadOutcomes();
   }
 
+  _editUserPref(UserPreferences userPreferences) async {
+    final list = ['Cat', 'Default', 'Coder']..shuffle();
+    final name = list[0];
+    final updatedUserPref = userPreferences.copyWith(theme: name);
+    await _localRepository.updateUserPref(updatedUserPref);
+    _loadUserPref();
+  }
+
   //
   //
   //
 
-  _deleteAllActivities() async {
-    await _localRepository.deleteAllActivities();
+  _clearAllActivities() async {
+    await _localRepository.clearAllActivities();
     _loadActivities();
   }
 
-  _deleteAllOutcomes() async {
-    await _localRepository.deleteAllOutcomes();
+  _clearAllOutcomes() async {
+    await _localRepository.clearAllOutcomes();
     _loadOutcomes();
+  }
+
+  _clearAllUserPref() async {
+    await _localRepository.clearAllUserPref();
+    _loadUserPref();
   }
 }
