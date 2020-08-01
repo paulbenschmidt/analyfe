@@ -25,7 +25,7 @@ ThemeData _buildDefaultTheme() {
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             color: Colors.blueGrey[700],
-            fontSize: 12,
+            fontSize: 10,
           ),
         ),
   );

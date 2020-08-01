@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 
-import '../screens/analytics_screen.dart';
+import '../screens/test_screen.dart';
 import '../screens/settings_screen.dart';
-import '../models/activities.dart';
+import '../models/activity.dart';
+import '../providers/activities.dart';
+import '../providers/outcomes.dart';
+import '../providers/activity_records.dart';
+import '../providers/outcome_records.dart';
+import '../widgets/add_record_widget.dart';
 import '../style/soft_ui.dart';
 
-// Widget for App Bar that displays time and allows user to cycle through dates
-AppBar entryAppBar(context) {
+AppBar entryAppBar(context, date) {
   return AppBar(
     backgroundColor: Theme.of(context).backgroundColor,
     elevation: 0,
@@ -18,27 +24,29 @@ AppBar entryAppBar(context) {
           Container(
             child: FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AnalyticsScreen.routeName);
+                Navigator.of(context).pushNamed(TestScreen.routeName);
               },
-              child: Icon(Icons.chevron_left),
+              child: Icon(Icons.more_horiz),
             ),
             decoration: SoftUi.boxDecoration(context),
             width: 60,
           ),
-          Column(
-            children: [
-              Text(
-                DateTime.now().toString().substring(0, 10),
+          Container(
+            child: FlatButton(
+              onPressed: () {},
+              child: Text(
+                date,
                 style: Theme.of(context).textTheme.headline1,
               ),
-            ],
+            ),
+            decoration: SoftUi.boxDecoration(context),
           ),
           Container(
             child: FlatButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(SettingsScreen.routeName);
               },
-              child: Icon(Icons.chevron_right),
+              child: Icon(Icons.settings),
             ),
             decoration: SoftUi.boxDecoration(context),
             width: 60,
@@ -108,43 +116,21 @@ Column calendarHours(context) {
   );
 }
 
-Stack stackOfRecordedActivities(context, height) {
+Stack recordedActivities(context, height, date) {
   final minutesInDay = 24 * 60;
   final pixelsPerMinute = height / minutesInDay;
 
-  List<Entry> allEntries = [
-    Entry(
-      activityName: 'Read',
-      startTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 9),
-      endTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 11),
-      quality: 1,
-      color: Colors.green,
-    ),
-    Entry(
-      activityName: 'Exercise',
-      startTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 23),
-      endTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 24),
-      quality: 1,
-      color: Colors.red,
-    ),
-    Entry(
-      activityName: 'Meal',
-      startTime: DateTime.now(),
-      endTime: DateTime.now().add(Duration(hours: 2)),
-      quality: 1,
-      color: Colors.purple,
-    ),
-  ];
+  final recordedActivitiesData =
+      Provider.of<ActivityRecords>(context, listen: true);
+  final recordedActivities = recordedActivitiesData.records;
 
   var entryWidgets = List<Widget>();
-  for (var entry in allEntries) {
-    var durationInMinutes = entry.endTime.difference(entry.startTime).inMinutes;
+  for (var entry in recordedActivities) {
+    var end = entry.endTime.toDateTime();
+    var start = entry.startTime.toDateTime();
+    var durationInMinutes = end.difference(start).inMinutes;
     var durationInPixels = durationInMinutes * pixelsPerMinute;
-    var startTimeInMinutes = entry.startTime.hour * 60 + entry.startTime.minute;
+    var startTimeInMinutes = start.hour * 60 + start.minute;
 
     entryWidgets.add(
       Container(
@@ -159,9 +145,9 @@ Stack stackOfRecordedActivities(context, height) {
               height: durationInPixels,
               width: 80,
               child: Center(
-                child: Text(entry.activityName),
+                child: Text(entry.name),
               ),
-              decoration: SoftUi.boxEntryOutline(context, entry.color),
+              decoration: SoftUi.boxEntryOutline(context, Colors.green),
             ),
           ],
         ),
@@ -171,28 +157,31 @@ Stack stackOfRecordedActivities(context, height) {
   return Stack(children: entryWidgets);
 }
 
+class Mood {
+  final DateTime time;
+  final int quality;
+
+  Mood({
+    @required this.time,
+    @required this.quality,
+  });
+}
+
 // Returns stack of mood entries
-Stack stackOfMoods(context, height) {
+Stack recordedOutcomes(context, height, date) {
   final minutesInDay = 24 * 60;
   final pixelsPerMinute = (height - 30) / minutesInDay;
 
-  List<Mood> moods = [
-    Mood(
-      time: DateTime.now(),
-      quality: 1,
-    ),
-    Mood(
-      time: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 15),
-      quality: -1,
-    ),
-  ];
+  final recordedOutcomesData =
+      Provider.of<OutcomeRecords>(context, listen: true);
+  final recordedOutcomes = recordedOutcomesData.records;
 
-  var moodWidgets = List<Widget>();
-  for (var mood in moods) {
-    var startTimeInMinutes = mood.time.hour * 60 + mood.time.minute;
+  var outcomeWidgets = List<Widget>();
+  for (var outcome in recordedOutcomes) {
+    var time = outcome.recordedTime.toDateTime();
+    var startTimeInMinutes = time.hour * 60 + time.minute;
 
-    moodWidgets.add(
+    outcomeWidgets.add(
       Container(
         height: height.toDouble(),
         child: Column(
@@ -205,7 +194,7 @@ Stack stackOfMoods(context, height) {
               backgroundColor: Colors.indigo,
               child: Center(
                 child: Text(
-                  mood.quality.toString(),
+                  outcome.sliderVal.toString(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -215,56 +204,81 @@ Stack stackOfMoods(context, height) {
       ),
     );
   }
-  return Stack(children: moodWidgets);
+  return Stack(children: outcomeWidgets);
 }
 
-Column activityOptions(context, height) {
-  List<Activity> activities = [
-    Activity(
-      activityName: 'Run',
-      color: Colors.purple,
-    ),
-    Activity(
-      activityName: 'Meal',
-      color: Colors.red,
-    ),
-  ];
+Column eventOptions(context, date) {
+  final activitiesData = Provider.of<Activities>(context, listen: true);
+  final activities = activitiesData.options;
 
-  var activityWidgets = List<Widget>();
-  activityWidgets.add(
-    Padding(
-      padding: EdgeInsets.symmetric(vertical: 1),
-      child: FlatButton(
-        onPressed: () {},
+  final outcomesData = Provider.of<Outcomes>(context, listen: true);
+  final outcomes = outcomesData.options;
+
+  var eventWidgets = List<Widget>();
+
+  for (var outcome in outcomes) {
+    eventWidgets.add(
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          width: 100,
-          child: Center(
-            child: Text('Mood'),
+          height: 35,
+          child: ButtonTheme(
+            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+            minWidth: 0,
+            height: 0,
+            child: FlatButton(
+              onPressed: () => addRecord(context, date, 'Outcome', outcome),
+              child: Center(
+                child: Text(
+                  outcome.name,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
           ),
-          decoration: SoftUi.boxEntryOutline(context, Colors.blueGrey),
+          decoration: SoftUi.boxEntryOutline(context, Colors.green),
         ),
+      ),
+    );
+  }
+
+  eventWidgets.add(
+    Padding(
+      padding: EdgeInsets.symmetric(horizontal: 3),
+      child: Divider(
+        thickness: 2,
       ),
     ),
   );
 
   for (var activity in activities) {
-    activityWidgets.add(
+    eventWidgets.add(
       Padding(
-        padding: EdgeInsets.symmetric(vertical: 1),
-        child: FlatButton(
-          onPressed: () {},
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            width: 100,
-            child: Center(
-              child: Text(activity.activityName),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+        child: Container(
+          height: 35,
+          child: ButtonTheme(
+            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+            minWidth: 0,
+            height: 0,
+            child: FlatButton(
+              onPressed: () {
+                addRecord(context, date, 'Activity', activity);
+              },
+              child: Center(
+                child: Text(
+                  activity.name,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
-            decoration: SoftUi.boxEntryOutline(context, activity.color),
           ),
+          decoration: SoftUi.boxEntryOutline(context, Colors.green),
         ),
       ),
     );
   }
-  return Column(children: activityWidgets);
+  return Column(children: eventWidgets);
 }

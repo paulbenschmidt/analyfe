@@ -10,10 +10,65 @@ class EntryScreen extends StatefulWidget {
   _EntryScreenState createState() => _EntryScreenState();
 }
 
-class _EntryScreenState extends State<EntryScreen> {
+class _EntryScreenState extends State<EntryScreen>
+    with SingleTickerProviderStateMixin {
   ScrollController _scrollController =
       ScrollController(initialScrollOffset: 35.0 * 6);
-  var accepted = false;
+
+  AnimationController _controller;
+  Animation<double> _leftAnimation;
+  Animation<double> _leftOpactiyAnimation;
+  Animation<double> _rightAnimation;
+  bool editActivityOptions = false;
+
+  // Animations to enable edit event options screen
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 350,
+      ),
+    );
+    _leftAnimation = Tween(begin: 250.0, end: 57.0).animate(
+      new CurvedAnimation(
+        parent: _controller,
+        curve: new Interval(
+          0.250,
+          0.900,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _leftOpactiyAnimation = Tween(begin: 1.0, end: 0.5).animate(
+      new CurvedAnimation(
+        parent: _controller,
+        curve: new Interval(
+          0.0,
+          0.900,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
+    _rightAnimation =
+        Tween(begin: 100.0, end: 275.0).animate(new CurvedAnimation(
+      parent: _controller,
+      curve: new Interval(
+        0.250,
+        0.900,
+        curve: Curves.easeIn,
+      ),
+    ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  final date = DateTime.now().toString().substring(0, 10);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +76,7 @@ class _EntryScreenState extends State<EntryScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
-        child: entryAppBar(context),
+        child: entryAppBar(context, date),
       ),
       body: Column(
         children: [
@@ -29,50 +84,65 @@ class _EntryScreenState extends State<EntryScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                width: 250,
-                height: 540,
-                decoration: SoftUi.boxDecoration(context),
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Stack(
-                    children: [
-                      calendarHours(context),
-                      Padding(
-                        padding: EdgeInsets.only(left: 55, top: 18),
-                        child: Container(
-                          width: 150,
-                          height: 864,
-                          child: stackOfRecordedActivities(context, 864),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 350),
+                width: _leftAnimation.value,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: 250,
+                  height: 540,
+                  decoration: SoftUi.boxDecoration(context),
+                  child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Opacity(
+                        opacity: _leftOpactiyAnimation.value,
+                        child: Stack(
+                          children: [
+                            calendarHours(context),
+                            Padding(
+                              padding: EdgeInsets.only(left: 55, top: 18),
+                              child: Container(
+                                width: 150,
+                                height: 864,
+                                child: recordedActivities(context, 864, date),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 200, top: 3),
+                              child: Container(
+                                width: 150,
+                                height: 894,
+                                child: recordedOutcomes(context, 894, date),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 200, top: 3),
-                        child: Container(
-                          width: 150,
-                          height: 894,
-                          child: //Container(color: Colors.orange,)
-                              stackOfMoods(context, 894),
-                        ),
-                      ),
-                    ],
-                  ),
+                      )),
                 ),
               ),
-              Container(
+              AnimatedContainer(
+                duration: Duration(milliseconds: 350),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-                width: 100,
+                width: _rightAnimation.value,
                 height: 540,
                 decoration: SoftUi.boxDecoration(context),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SingleChildScrollView(
-                      child: activityOptions(context, 540),
+                      child: eventOptions(context, date),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (editActivityOptions == false) {
+                          _controller.forward();
+                          editActivityOptions = !editActivityOptions;
+                        } else {
+                          _controller.reverse();
+                          editActivityOptions = !editActivityOptions;
+                        }
+                      },
                       icon: Icon(Icons.edit),
                     )
                   ],

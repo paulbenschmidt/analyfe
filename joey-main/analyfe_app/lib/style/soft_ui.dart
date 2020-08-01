@@ -25,8 +25,8 @@ class SoftUi {
   static BoxDecoration boxEntryOutline(context, borderColor) {
     return BoxDecoration(
       color: Theme.of(context).backgroundColor,
-      border: Border.all(color: borderColor, width: 3.5),
-      borderRadius: BorderRadius.all(Radius.circular(20)),
+      border: Border.all(color: borderColor, width: 3),
+      borderRadius: BorderRadius.all(Radius.circular(13)),
     );
   }
 }
