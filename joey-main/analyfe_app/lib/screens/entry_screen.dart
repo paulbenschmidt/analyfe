@@ -136,10 +136,14 @@ class _EntryScreenState extends State<EntryScreen>
                     IconButton(
                       onPressed: () {
                         if (editActivityOptions == false) {
-                          _controller.forward();
+                          setState(() {
+                            _controller.forward();
+                          });
                           editActivityOptions = !editActivityOptions;
                         } else {
-                          _controller.reverse();
+                          setState(() {
+                            _controller.reverse();
+                          });
                           editActivityOptions = !editActivityOptions;
                         }
                       },

@@ -1,9 +1,9 @@
-import 'package:sembast/timestamp.dart';
+import 'package:sembast/timestamp.dart' as sembast;
 
 class Outcome {
   final int id;
   final String name;
-  final Timestamp recordedTime;
+  final sembast.Timestamp recordedTime;
   final double sliderVal;
 
   Outcome({
@@ -21,19 +21,19 @@ class Outcome {
     };
   }
 
-  factory Outcome.fromMap(int id, Map<String, dynamic> map) {
+  factory Outcome.fromMap(int id, Map<String, dynamic> outcomeMap) {
     return Outcome(
       id: id,
-      name: map['name'],
-      recordedTime: map['recordedTime'],
-      sliderVal: map['sliderVal'],
+      name: outcomeMap['name'],
+      recordedTime: outcomeMap['recordedTime'],
+      sliderVal: outcomeMap['sliderVal'],
     );
   }
 
   Outcome copyWith({
     int id,
     String name,
-    DateTime recordedTime,
+    DateTime recordedTime, //Necessary to change to Timestamp?
     double sliderVal,
   }) {
     return Outcome(

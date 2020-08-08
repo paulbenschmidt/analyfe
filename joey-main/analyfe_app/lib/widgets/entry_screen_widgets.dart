@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../screens/test_screen.dart';
+import '../screens/analytics_screen.dart';
 import '../screens/settings_screen.dart';
-import '../models/activity.dart';
-import '../providers/activities.dart';
-import '../providers/outcomes.dart';
-import '../providers/activity_records.dart';
-import '../providers/outcome_records.dart';
 import '../widgets/add_record_widget.dart';
 import '../style/soft_ui.dart';
 
@@ -24,7 +18,7 @@ AppBar entryAppBar(context, date) {
           Container(
             child: FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(TestScreen.routeName);
+                Navigator.of(context).pushNamed(AnalyticsScreen.routeName);
               },
               child: Icon(Icons.more_horiz),
             ),
@@ -120,9 +114,8 @@ Stack recordedActivities(context, height, date) {
   final minutesInDay = 24 * 60;
   final pixelsPerMinute = height / minutesInDay;
 
-  final recordedActivitiesData =
-      Provider.of<ActivityRecords>(context, listen: true);
-  final recordedActivities = recordedActivitiesData.records;
+  final recordedActivitiesData = []; //Pull from local
+  final recordedActivities = [];
 
   var entryWidgets = List<Widget>();
   for (var entry in recordedActivities) {
@@ -172,9 +165,8 @@ Stack recordedOutcomes(context, height, date) {
   final minutesInDay = 24 * 60;
   final pixelsPerMinute = (height - 30) / minutesInDay;
 
-  final recordedOutcomesData =
-      Provider.of<OutcomeRecords>(context, listen: true);
-  final recordedOutcomes = recordedOutcomesData.records;
+  final recordedOutcomesData = [];
+  final recordedOutcomes = []; //Pull from local
 
   var outcomeWidgets = List<Widget>();
   for (var outcome in recordedOutcomes) {
@@ -208,11 +200,9 @@ Stack recordedOutcomes(context, height, date) {
 }
 
 Column eventOptions(context, date) {
-  final activitiesData = Provider.of<Activities>(context, listen: true);
-  final activities = activitiesData.options;
+  final activities = []; //Pull from local
 
-  final outcomesData = Provider.of<Outcomes>(context, listen: true);
-  final outcomes = outcomesData.options;
+  final outcomes = []; //Pull from local
 
   var eventWidgets = List<Widget>();
 

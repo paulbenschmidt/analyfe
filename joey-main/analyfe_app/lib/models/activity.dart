@@ -9,7 +9,6 @@ class Activity {
   final sembast.Timestamp endTime;
   final double sliderVal;
   final double countVal;
-  final bool binaryVal;
 
   Activity({
     this.id,
@@ -18,47 +17,38 @@ class Activity {
     this.endTime,
     this.sliderVal,
     this.countVal,
-    this.binaryVal,
   });
 
-  //
-  //
   //Firebase Operations
-  //
-  //
   static void sendToFirebase({
     int id,
     String activity,
-    DateTime startTime, //change to TimeStamp???
+    DateTime startTime, //Change to Timestamp
     DateTime endTime,
     double sliderValue,
     double countValue,
-    bool binaryValue,
   }) async {
-    //get user information
+    //Get user information
     final firebaseUser = await FirebaseAuth.instance.currentUser();
     final userID = firebaseUser.uid;
-    //print(userID);
     Firestore.instance
         .collection('/Records/$userID/Activity: $activity')
         .document(endTime.toString())
         .setData({
       'ID': id,
-      'startTime': startTime,
-      'endTime': endTime,
+      'startTime': startTime, //Change from Timestamp to DateTime
+      'endTime': endTime, //Change from Timestamp to DateTime
       'sliderVal': sliderValue,
       'countVal': countValue,
-      'binaryVal': binaryValue,
     });
   }
 
-  //convert Firebase entries to a list
+  //Download data from FireStore in form of list
   static Future<List<Activity>> returnList() async {
-    //get current user ID
+    //Get current user ID
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     final userID = firebaseUser.uid;
-    //activity name
-    String activity = 'Sleep'; //needs to access all activities
+    String activity = 'Sleep'; //Needs to access all activities
     QuerySnapshot snapshot = await Firestore.instance
         .collection('/Activities/$userID/$activity')
         .getDocuments();
@@ -74,17 +64,12 @@ class Activity {
                 DateTime.parse(doc.data['endTime'].toDate().toString())),
             sliderVal: doc.data['sliderVal'],
             countVal: doc.data['countVal'],
-            binaryVal: doc.data['binaryVal'],
           ),
         )
         .toList();
   }
 
-  //
-  //
   //Local Database Operations
-  //
-  //
   Map<String, dynamic> toMap() {
     return {
       'name': this.name,
@@ -92,30 +77,27 @@ class Activity {
       'endTime': this.endTime,
       'sliderVal': this.sliderVal,
       'countVal': this.countVal,
-      'binaryVal': this.binaryVal,
     };
   }
 
-  factory Activity.fromMap(int id, Map<String, dynamic> map) {
+  factory Activity.fromMap(int id, Map<String, dynamic> activityMap) {
     return Activity(
       id: id,
-      name: map['name'],
-      startTime: map['startTime'],
-      endTime: map['endTime'],
-      sliderVal: map['sliderVal'],
-      countVal: map['countVal'],
-      binaryVal: map['binaryVal'],
+      name: activityMap['name'],
+      startTime: activityMap['startTime'],
+      endTime: activityMap['endTime'],
+      sliderVal: activityMap['sliderVal'],
+      countVal: activityMap['countVal'],
     );
   }
 
   Activity copyWith({
     int id,
     String name,
-    DateTime startTime,
+    DateTime startTime, //Necessary to change to Timestamp?
     DateTime endTime,
     double sliderVal,
     double countVal,
-    bool binaryVal,
   }) {
     return Activity(
       id: id ?? this.id,
@@ -124,7 +106,6 @@ class Activity {
       endTime: endTime ?? this.endTime,
       sliderVal: sliderVal ?? this.sliderVal,
       countVal: countVal ?? this.countVal,
-      binaryVal: binaryVal ?? this.binaryVal,
     );
   }
 }

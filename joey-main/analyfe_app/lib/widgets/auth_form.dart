@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  //Required input for Authform
+  final bool isLoading;
+
   AuthForm(
     this.submitFn,
     this.isLoading,
   );
 
-  final bool isLoading;
-  //submit function with user credentials sent from auth_screen file
+  //Submit function with user credentials sent from auth_screen file
   final void Function(
     String email,
     String password,
@@ -22,7 +22,8 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
-  //initialize blank values for user credentials
+
+  //Initialize blank values for user credentials
   var _isLogin = true;
   var _userEmail = '';
   var _userPassword = '';
@@ -54,11 +55,10 @@ class _AuthFormState extends State<AuthForm> {
             //Set form for entering user credentials
             child: Form(
               key: _formKey,
-              //set column with email, password, and login navigation buttons
+              //Set column with email, password, and login navigation buttons
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  //Email form field
                   TextFormField(
                     key: ValueKey('email'),
                     validator: (value) {
@@ -74,7 +74,7 @@ class _AuthFormState extends State<AuthForm> {
                       _userEmail = value;
                     },
                   ),
-                  //Password form field
+
                   TextFormField(
                     key: ValueKey('password'),
                     validator: (value) {
@@ -91,9 +91,9 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                   SizedBox(height: 12),
-                  //buttons to navigate login options
+                  //Buttons to navigate login options
                   if (widget.isLoading)
-                    CircularProgressIndicator(), //waiting switch
+                    CircularProgressIndicator(),
                   if (!widget.isLoading)
                     RaisedButton(
                       child: Text(_isLogin ? 'Login' : 'Signup'),

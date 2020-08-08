@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../screens/DB_screen.dart';
-import '../screens/test_screen.dart';
+import '../auxiliary/DB_screen.dart';
+import '../auxiliary/test_screen.dart';
 import '../models/activity.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -29,7 +29,6 @@ class SettingsScreen extends StatelessWidget {
                     endTime: startTime.add(new Duration(hours: 2)),
                     sliderValue: null,
                     countValue: null,
-                    binaryValue: true,
                   );
                 }),
             SizedBox(height: 12),

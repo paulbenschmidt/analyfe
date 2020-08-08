@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../dummydata.dart';
+import '../auxiliary/dummydata.dart';
 import '../graphing/line_chart.dart';
 import '../graphing/data_line_graph.dart';
 
@@ -16,8 +16,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   int i = 0;
   List switchGraph = ['daily', 'weekly', 'monthly', 'YTD'];
   String graphType = 'daily';
-
-  int _activeMeterIndex;
 
   @override
   Widget build(BuildContext context) {

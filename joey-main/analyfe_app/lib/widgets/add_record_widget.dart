@@ -1,13 +1,9 @@
-import 'package:analyfe_app/models/activity.dart';
-import 'package:analyfe_app/models/outcome.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:sembast/timestamp.dart';
 
-import '../providers/activity_records.dart';
-import '../providers/outcome_records.dart';
+import '../models/activity.dart';
+import '../models/outcome.dart';
 
 void addRecord(context, date, type, data) {
   DateTime startTime = DateTime.now();
@@ -107,10 +103,7 @@ void addRecord(context, date, type, data) {
                                         )),
                                         sliderVal: (sliderValue * 10),
                                       );
-                                      Provider.of<OutcomeRecords>(
-                                        context,
-                                        listen: false,
-                                      ).addOutcomeEntry(newEntry);
+                                      //Add outcome entry to DB here
                                       Navigator.of(context).pop();
                                     },
                                   ),
@@ -232,10 +225,7 @@ void addRecord(context, date, type, data) {
                                         )),
                                         sliderVal: sliderValue,
                                       );
-                                      Provider.of<ActivityRecords>(
-                                        context,
-                                        listen: false,
-                                      ).addActivityEntry(newEntry);
+                                      //Add Activity entry
                                       Navigator.of(context).pop();
                                     },
                                   ),

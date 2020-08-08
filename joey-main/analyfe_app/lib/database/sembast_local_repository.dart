@@ -3,7 +3,6 @@ import 'package:sembast/sembast.dart';
 
 import '../models/activity.dart';
 import '../models/outcome.dart';
-import '../models/userPref.dart';
 import './local_repository.dart';
 
 class SembastLocalRepository extends LocalRepository {
@@ -12,14 +11,10 @@ class SembastLocalRepository extends LocalRepository {
       intMapStoreFactory.store('activityList');
   final StoreRef<int, Map<String, dynamic>> _outcomeList =
       intMapStoreFactory.store('outcomeList');
-  final StoreRef<int, Map<String, dynamic>> _userPreferences =
-      intMapStoreFactory.store('userPreferences');
-  // final StoreRef<int, Map<String, dynamic>> _userPreferences =
-  //     intMapStoreFactory.store('outcomeList');
 
   SembastLocalRepository();
 
-  //constructors to insert a new item to a store
+  //Constructor to insert
   @override
   Future<int> insertActivity(Activity activity) async {
     return await _activityList.add(_database, activity.toMap());
@@ -30,15 +25,7 @@ class SembastLocalRepository extends LocalRepository {
     return await _outcomeList.add(_database, outcome.toMap());
   }
 
-  @override
-  Future<int> insertUserPref(UserPreferences userPreferences) async {
-    return await _userPreferences.add(_database, userPreferences.toMap());
-  }
-  //
-  //
-  //
-
-  //constructors to update/modify a current entry in a store
+  //Constructors to update/modify a current entry in a store
   @override
   Future updateActivity(Activity activity) async {
     await _activityList.record(activity.id).update(_database, activity.toMap());
@@ -49,18 +36,7 @@ class SembastLocalRepository extends LocalRepository {
     await _outcomeList.record(outcome.id).update(_database, outcome.toMap());
   }
 
-  @override
-  Future updateUserPref(UserPreferences userPreferences) async {
-    await _userPreferences
-        .record(userPreferences.id)
-        .update(_database, userPreferences.toMap());
-  }
-
-  //
-  //
-  //
-
-  //constructor to delete an entry in a store
+  //Constructor to delete an entry in a store
   @override
   Future deleteActivity(int activityId) async {
     await _activityList.record(activityId).delete(_database);
@@ -71,11 +47,7 @@ class SembastLocalRepository extends LocalRepository {
     await _outcomeList.record(outcomeId).delete(_database);
   }
 
-  //
-  //
-  //
-
-  //contructor to get all entries from a store
+  //Constructor to get all entries from a store
   @override
   Future<List<Activity>> getAllActivities() async {
     final snapshots = await _activityList.find(_database);
@@ -92,29 +64,12 @@ class SembastLocalRepository extends LocalRepository {
         .toList(growable: false);
   }
 
-  @override
-  Future<List<UserPreferences>> getAllUserPref() async {
-    final snapshots = await _userPreferences.find(_database);
-    return snapshots
-        .map(
-            (snapshot) => UserPreferences.fromMap(snapshot.key, snapshot.value))
-        .toList(growable: false);
-  }
-
-  //
-  //
-  //
-
-  //constructor to delete contents of an entire store
+  //Constructor to delete contents of an entire store
   Future clearAllActivities() async {
     await _activityList.delete(_database);
   }
 
   Future clearAllOutcomes() async {
-    await _outcomeList.delete(_database);
-  }
-
-  Future clearAllUserPref() async {
     await _outcomeList.delete(_database);
   }
 }

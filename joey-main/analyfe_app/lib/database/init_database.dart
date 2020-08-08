@@ -8,20 +8,18 @@ import './local_repository.dart';
 import './sembast_local_repository.dart';
 
 //This file initializes/creates the database necessary to store the data locally
-
 class Init {
   static Future initialize() async {
-    //initialize Sembast database
+    //Initialize Sembast database
     final appDir =
-        await getApplicationDocumentsDirectory(); //find the file path to save files
+        await getApplicationDocumentsDirectory(); //Find file path to save files
     await appDir.create(recursive: true);
     final databasePath =
-        join(appDir.path, "sembast.db"); //merges database name to filepath
+        join(appDir.path, "sembast.db"); //Merges database name to filepath
     final database = await databaseFactoryIo.openDatabase(databasePath);
-    GetIt.I.registerSingleton<Database>(
-        database); //registers the database to be accessed later
+    GetIt.I.registerSingleton<Database>(database); //Registers database
 
-    //register Repository
+    //Register Repository
     GetIt.I
         .registerLazySingleton<LocalRepository>(() => SembastLocalRepository());
   }
