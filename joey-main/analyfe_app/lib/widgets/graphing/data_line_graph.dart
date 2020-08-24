@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:sembast/timestamp.dart';
 
-import '../models/outcome.dart';
+import '../../models/outcome.dart';
 
 List<FlSpot> linearData(List<Outcome> outcomeList, String graphType) {
   List<FlSpot> dataPoints = [];

@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../auxiliary/dummydata.dart';
-import '../graphing/line_chart.dart';
-import '../graphing/data_line_graph.dart';
+import '../widgets/graphing/line_chart.dart';
+import '../widgets/graphing/data_line_graph.dart';
 
 class AnalyticsScreen extends StatefulWidget {
   static const routeName = '/analytics';

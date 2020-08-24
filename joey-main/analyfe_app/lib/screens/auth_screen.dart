@@ -11,10 +11,10 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _auth = FirebaseAuth.instance; //store login attempt
-  var _isLoading = false; //passed to AuthForm to load intermediate login screen
+  final _auth = FirebaseAuth.instance; //Store login attempt
+  var _isLoading = false; //Passed to AuthForm to load intermediate login screen
 
-  //user information widget that is sent to Authform
+  //User information widget that is sent to Authform
   void _submitAuthForm(
     String email,
     String password,
@@ -28,19 +28,19 @@ class _AuthScreenState extends State<AuthScreen> {
         _isLoading = true;
       });
       if (isLogin) {
-        //sign in attempt
+        //Sign in attempt
         authResult = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
       } else {
-        //create new user attempt
+        //Create new user attempt
         authResult = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
-        //add new user email to Firebase database
+        //Add new user email to Firebase database
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
@@ -53,7 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
       if (err.message != null) {
         message =
-            err.message; //display error login message if there is a message
+            err.message; //Display error login message if there is a message
       }
 
       //RIGHT FORMAT FOR THEME?
